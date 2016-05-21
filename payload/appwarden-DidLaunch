@@ -1,0 +1,45 @@
+#!/bin/bash
+#
+# Short:    Do something when an app is launched
+# Version:  1.05, 23-October-2015
+# Author:   Mark J Swift
+#
+# Called by appwarden as follows:    
+#   appwarden-DidLaunch "DidLaunch:Epoch:ApplicationBundleIdentifier:ApplicationName:ApplicationPath:ApplicationProcessIdentifier"
+
+# ---
+
+# Check we have the correct number of parameters
+if [ $# -lt 1 ]
+then
+  exit 0
+fi
+
+# -- Script is run as the user with app info as first parameter --
+
+GLB_ScriptParam1="${1}"
+
+# Get notification e.g. WillLaunch, DidLaunch or DidTerminate
+GLB_ApplicationNotification="$(echo ${GLB_ScriptParam1} | cut -d":" -f1)"
+
+# Get Date/Time Epoch of the notification
+GLB_NotificationEpoch="$(echo ${GLB_ScriptParam1} | cut -d":" -f2)"
+
+# Get ApplicationBundleIdentifier e.g. com.apple.TextEdit
+# Note, older applications may return "(null)"
+GLB_ApplicationBundleIdentifier="$(echo ${GLB_ScriptParam1} | cut -d":" -f3)"
+
+# Get ApplicationName e.g. TextEdit
+GLB_ApplicationName="$(echo ${GLB_ScriptParam1} | cut -d":" -f4)"
+
+# Get ApplicationPath e.g. /Applications/TextEdit.app
+GLB_ApplicationPath="$(echo ${GLB_ScriptParam1} | cut -d":" -f5)"
+
+# Get ApplicationProcessIdentifier - i.e. the process ID
+GLB_ApplicationProcessIdentifier="$(echo ${GLB_ScriptParam1} | cut -d":" -f6)"
+
+# ---
+
+# At this point you can do whatever you like - this is just a quick example
+
+say "${GLB_ApplicationName} did launch."

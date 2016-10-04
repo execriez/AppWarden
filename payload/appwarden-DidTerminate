@@ -1,8 +1,9 @@
 #!/bin/bash
 #
 # Short:    Do something when an app is Terminated
-# Version:  1.05, 23-October-2015
 # Author:   Mark J Swift
+# Version:  1.0.7
+# Modified: 04-Oct-2016
 #
 # Called by appwarden as follows:    
 #   appwarden-DidTerminate "DidTerminate:Epoch:ApplicationBundleIdentifier:ApplicationName:ApplicationPath:ApplicationProcessIdentifier"
@@ -17,30 +18,30 @@ fi
 
 # -- Script is run as the user with app info as first parameter --
 
-GLB_ScriptParam1="${1}"
-
-# Get notification e.g. WillLaunch, DidLaunch or DidTerminate
-GLB_ApplicationNotification="$(echo ${GLB_ScriptParam1} | cut -d":" -f1)"
-
-# Get Date/Time Epoch of the notification
-GLB_NotificationEpoch="$(echo ${GLB_ScriptParam1} | cut -d":" -f2)"
+sv_ScriptParam1="${1}"
 
 # Get ApplicationBundleIdentifier e.g. com.apple.TextEdit
 # Note, older applications may return "(null)"
-GLB_ApplicationBundleIdentifier="$(echo ${GLB_ScriptParam1} | cut -d":" -f3)"
+sv_ThisAppBundleIdentifier="$(echo ${sv_ScriptParam1} | cut -d":" -f3)"
+
+# Get notification e.g. WillLaunch, DidLaunch or DidTerminate
+sv_ThisAppNotificationType="$(echo ${sv_ScriptParam1} | cut -d":" -f1)"
+
+# Get Date/Time Epoch of the notification
+iv_ThisAppNotificationEpoch="$(echo ${sv_ScriptParam1} | cut -d":" -f2)"
 
 # Get ApplicationName e.g. TextEdit
-GLB_ApplicationName="$(echo ${GLB_ScriptParam1} | cut -d":" -f4)"
+sv_ThisAppName="$(echo ${sv_ScriptParam1} | cut -d":" -f4)"
 
 # Get ApplicationPath e.g. /Applications/TextEdit.app
-GLB_ApplicationPath="$(echo ${GLB_ScriptParam1} | cut -d":" -f5)"
+sv_ThisAppFilePath="$(echo ${sv_ScriptParam1} | cut -d":" -f5)"
 
 # Get ApplicationProcessIdentifier - i.e. the process ID
-GLB_ApplicationProcessIdentifier="$(echo ${GLB_ScriptParam1} | cut -d":" -f6)"
+sv_ThisAppProcessID="$(echo ${sv_ScriptParam1} | cut -d":" -f6)"
 
 # ---
 
 # At this point you can do whatever you like - this is just a quick example
 
-say "${GLB_ApplicationName} did terminate."
+say "${sv_ThisAppName} did terminate."
 

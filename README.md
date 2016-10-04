@@ -28,11 +28,15 @@ These example scripts simply use the "say" command to let you know when an App i
 1. Delete the following files and folders
 
 		/usr/local/AppWarden
-		/Library/LaunchDaemons/com.github.execriez.AppWarden.Example.plist
+		/Library/LaunchDaemons/com.github.execriez.AppWarden.plist
 	
 2. Reboot
 
 ##History:
+
+1.0.7 - 04 OCT 2016
+
+* Added install.command - I forgot to include it in the last update.
 
 1.0.6 - 21 MAY 2016
 

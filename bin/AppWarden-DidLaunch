@@ -1,0 +1,64 @@
+#!/bin/bash
+#
+# Short:    Do something when an application launches
+# Author:   Mark J Swift
+# Version:  1.0.8
+# Modified: 23-May-2017
+#
+# Called by AppWarden as follows:    
+#   AppWarden-DidLaunch "DidLaunch:Epoch:ApplicationBundleIdentifier:ApplicationName:ApplicationPath:ApplicationProcessIdentifier"
+
+# ---
+
+# Check we have the correct number of parameters
+if [ $# -lt 1 ]
+then
+  exit 0
+fi
+
+# ---
+
+# assume that all scripts are in a subdirectory off the main project directory
+GLB_sv_ProjectDirPath="$(dirname $(dirname ${0}))"
+
+# Include the CommonLib
+. "${GLB_sv_ProjectDirPath}/inc/Common.sh"
+
+# Exit if something went wrong unexpectedly
+if test -z "${GLB_sv_ProjectName}"
+then
+  exit 90
+fi
+
+# ---
+
+sv_ScriptParam1="${1}"
+
+# ---
+
+# Get ApplicationBundleIdentifier e.g. com.apple.TextEdit
+# Note, older applications may return "(null)"
+sv_ThisAppBundleIdentifier="$(echo ${sv_ScriptParam1} | cut -d":" -f3)"
+
+# Get notification e.g. WillLaunch, DidLaunch or DidTerminate
+sv_ThisAppNotificationType="$(echo ${sv_ScriptParam1} | cut -d":" -f1)"
+
+# Get Date/Time Epoch of the notification
+iv_ThisAppNotificationEpoch="$(echo ${sv_ScriptParam1} | cut -d":" -f2)"
+
+# Get ApplicationName e.g. TextEdit
+sv_ThisAppName="$(echo ${sv_ScriptParam1} | cut -d":" -f4)"
+
+# Get ApplicationPath e.g. /Applications/TextEdit.app
+sv_ThisAppFilePath="$(echo ${sv_ScriptParam1} | cut -d":" -f5)"
+
+# Get ApplicationProcessIdentifier - i.e. the process ID
+sv_ThisAppProcessID="$(echo ${sv_ScriptParam1} | cut -d":" -f6)"
+
+# ---
+
+# At this point you can do whatever you like - this is just a quick example
+
+GLB_nf_logmessage ${GLB_iv_MsgLevelNotice} "${sv_ThisAppName} did launch."
+
+say "${sv_ThisAppName} did launch."

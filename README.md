@@ -1,38 +1,85 @@
 # AppWarden
-Run custom code when an OSX app is launched or terminated.
+![Logo](images/AppWarden.jpg "Logo")
 
-##Description:
+Run custom code when a Mac OS app is launched or terminated.
 
-AppWarden catches OSX WillLaunch, DidLaunch and DidTerminate Application Notification events, to allow you to run custom code when an application launches or quits.
+## Description:
+
+AppWarden catches Mac OS WillLaunch, DidLaunch and DidTerminate Application Notification events, to allow you to run custom code when an application launches or quits.
 
 It consists of the following components:
 
-	appwarden              - The main binary that catches the Application Notification events
-	appwarden-WillLaunch   - Called as an application is loading
-	appwarden-DidLaunch    - Called when an application has fully loaded
-	appwarden-DidTerminate - Called when an application quits
+	AppWarden              - The main binary that catches the Application Notification events
+	AppWarden-WillLaunch   - Called as an application is loading
+	AppWarden-DidLaunch    - Called when an application has fully loaded
+	AppWarden-DidTerminate - Called when an application quits
 
-The example appwarden-WillLaunch, appwarden-DidLaunch and appwarden-DidTerminate are bash scripts.
+The example AppWarden-WillLaunch, AppWarden-DidLaunch and AppWarden-DidTerminate are bash scripts.
 
 These example scripts simply use the "say" command to let you know when an App is launched or quit. You should customise these scripts to your own needs.
 
 
-##How to install:
+## How to install:
 
-1. Download and unzip the software to a convenient location.
-2. Double click the file "Install.command"
-3. Reboot
+Download the AppWarden zip archive from <https://github.com/execriez/AppWarden>, then unzip the archive on a Mac workstation.
 
-##How to uninstall:
+Ideally, to install - you should double-click the following installer package which can be found in the "SupportFiles" directory.
 
-1. Delete the following files and folders
-
-		/usr/local/AppWarden
-		/Library/LaunchDaemons/com.github.execriez.AppWarden.plist
+	AppWarden.pkg
 	
-2. Reboot
+If the installer package isn't available, you can run the command-line installer which can be found in the "util" directory:
+
+	sudo Install
+
+The installer will install the following files and directories:
+
+	/Library/LaunchDaemons/com.github.execriez.appwarden.plist
+	/usr/AppWarden/
+
+There's no need to reboot.
+
+After installation, your computer will speak whenever the primary network status changes.
+
+You can alter the example shell scripts to alter this behavior, these can be found in the following location:
+
+	/usr/AppWarden/bin/AppWarden-DidLaunch
+	/usr/AppWarden/bin/AppWarden-DidTerminate
+	/usr/AppWarden/bin/AppWarden-WillLaunch
+
+If the installer fails you should check the logs.
+
+## Logs
+
+Logs are written to the following file:
+
+	/Library/Logs/com.github.execriez.appwarden.log
+
+## How to uninstall:
+
+To uninstall you should double-click the following uninstaller package which can be found in the "SupportFiles" directory.
+
+	AppWarden-Uninstaller.pkg
+	
+If the uninstaller package isn't available, you can uninstall from a shell by typing the following:
+
+	sudo /usr/local/AppWarden/util/Uninstall
+
+The uninstaller will uninstall the following files and directories:
+
+	/Library/LaunchDaemons/com.github.execriez.appwarden.plist
+	/usr/AppWarden/
+
+There's no need to reboot.
+
+After the uninstall everything goes back to normal, and application launches will not be tracked.
 
 ##History:
+
+1.0.8 - 23 MAY 2017
+
+* Updated the installer to be more in line with my other projects
+
+* Example scripts now write to a log file
 
 1.0.7 - 04 OCT 2016
 

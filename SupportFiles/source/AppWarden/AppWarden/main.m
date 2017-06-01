@@ -1,10 +1,11 @@
 //
 //  main.m
-//  appwarden
-//  Version 1.0.8
+//  AppWarden
+//  Version 1.0.9
 //
 //  Created on 31/03/2009.
-//  Copyright (c) 2015 Mark J Swift. All rights reserved.
+//  Updated on 01/06/2017
+//  Copyright (c) 2017 Mark J Swift. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

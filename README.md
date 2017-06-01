@@ -75,6 +75,10 @@ After the uninstall everything goes back to normal, and application launches wil
 
 ##History:
 
+1.0.9 - 01 JUN 2017
+
+* Recompiled to be backward compatible with MacOS 10.7 and later
+
 1.0.8 - 23 MAY 2017
 
 * Updated the installer to be more in line with my other projects

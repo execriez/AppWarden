@@ -2,8 +2,8 @@
 #
 # Short:    Do something when an application launches
 # Author:   Mark J Swift
-# Version:  1.0.8
-# Modified: 23-May-2017
+# Version:  1.0.9
+# Modified: 01-Jun-2017
 #
 # Called by AppWarden as follows:    
 #   AppWarden-DidLaunch "DidLaunch:Epoch:ApplicationBundleIdentifier:ApplicationName:ApplicationPath:ApplicationProcessIdentifier"

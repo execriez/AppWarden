@@ -73,7 +73,7 @@ There's no need to reboot.
 
 After the uninstall everything goes back to normal, and application launches will not be tracked.
 
-##History:
+## History:
 
 1.0.9 - 01 JUN 2017
 

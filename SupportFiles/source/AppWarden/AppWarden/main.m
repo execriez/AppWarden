@@ -1,10 +1,10 @@
 //
 //  main.m
 //  AppWarden
-//  Version 1.0.9
+//  Version 1.0.10
 //
 //  Created on 31/03/2009.
-//  Updated on 01/06/2017
+//  Updated on 28/09/2018
 //  Copyright (c) 2017 Mark J Swift. All rights reserved.
 //
 
@@ -40,6 +40,7 @@
 
 - (void)appWillLaunch:(NSNotification *)note
 {
+    NSLog(@"Will launch: '%@'", [[note userInfo] objectForKey:@"NSApplicationName"]);
     
     NSString *cmd = [NSString stringWithFormat:@"'%@'-WillLaunch \"WillLaunch:%@:%@:%@:%@:%@\"",[[NSBundle bundleForClass:[self class]] executablePath], [self dateInFormat:@"%s"], [[note userInfo] objectForKey:@"NSApplicationBundleIdentifier"], [[note userInfo] objectForKey:@"NSApplicationName"], [[note userInfo] objectForKey:@"NSApplicationPath"], [[note userInfo] objectForKey:@"NSApplicationProcessIdentifier"] ];
     [self executeCMD:cmd];
@@ -48,6 +49,7 @@
 
 - (void)appDidLaunch:(NSNotification *)note
 {
+    NSLog(@"Did launch: '%@'", [[note userInfo] objectForKey:@"NSApplicationName"]);
     
     NSString *cmd = [NSString stringWithFormat:@"'%@'-DidLaunch \"DidLaunch:%@:%@:%@:%@:%@\"",[[NSBundle bundleForClass:[self class]] executablePath], [self dateInFormat:@"%s"], [[note userInfo] objectForKey:@"NSApplicationBundleIdentifier"], [[note userInfo] objectForKey:@"NSApplicationName"], [[note userInfo] objectForKey:@"NSApplicationPath"], [[note userInfo] objectForKey:@"NSApplicationProcessIdentifier"] ];
     [self executeCMD:cmd];
@@ -55,12 +57,13 @@
 
 - (void)appDidTerminate:(NSNotification *)note
 {
+    NSLog(@"Did terminate: '%@'", [[note userInfo] objectForKey:@"NSApplicationName"]);
     
     NSString *cmd = [NSString stringWithFormat:@"'%@'-DidTerminate \"DidTerminate:%@:%@:%@:%@:%@\"",[[NSBundle bundleForClass:[self class]] executablePath], [self dateInFormat:@"%s"], [[note userInfo] objectForKey:@"NSApplicationBundleIdentifier"], [[note userInfo] objectForKey:@"NSApplicationName"], [[note userInfo] objectForKey:@"NSApplicationPath"], [[note userInfo] objectForKey:@"NSApplicationProcessIdentifier"] ];
     [self executeCMD:cmd];
 }
 
-// execute a shell command
+// execute a shell command, but don't wait around for it to finish
 - (NSData *) executeCMD:(NSString *)cmd
 {
     NSTask *task = [[NSTask alloc] init];
@@ -69,19 +72,20 @@
     NSArray *arguments = [NSArray arrayWithObjects: @"-c", cmd, nil];
     [task setArguments: arguments];
     
-    NSPipe *pipe = [[NSPipe alloc] init];
-    [task setStandardOutput: pipe];
+    //    NSPipe *pipe = [[NSPipe alloc] init];
+    //    [task setStandardOutput: pipe];
     
-    NSFileHandle *file  = [pipe fileHandleForReading];
+    //    NSFileHandle *file  = [pipe fileHandleForReading];
     
     [task launch];
     
-    NSData *data = [file readDataToEndOfFile];
+    NSData *data = NULL;
+    //    NSData *data = [file readDataToEndOfFile];
     
     return data;
 }
-@end
 
+@end
 
 
 

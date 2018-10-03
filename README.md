@@ -5,75 +5,131 @@ Run custom code when a Mac OS app is launched or terminated.
 
 ## Description:
 
-AppWarden catches Mac OS WillLaunch, DidLaunch and DidTerminate Application Notification events, to allow you to run custom code when an application launches or quits.
+AppWarden catches MacOS application launch events, to allow you to run custom code when an application launches or quits.
 
-It consists of the following components:
+AppWarden consists of the following components:
 
 	AppWarden              - The main binary that catches the Application Notification events
 	AppWarden-WillLaunch   - Called as an application is loading
 	AppWarden-DidLaunch    - Called when an application has fully loaded
 	AppWarden-DidTerminate - Called when an application quits
+ 
+AppWarden-WillLaunch, AppWarden-DidLaunch and AppWarden-DidTerminate are bash scripts.
 
-The example AppWarden-WillLaunch, AppWarden-DidLaunch and AppWarden-DidTerminate are bash scripts.
-
-These example scripts simply use the "say" command to let you know when an App is launched or quit. You should customise these scripts to your own needs.
+These example scripts use the "say" command to speak whenever an App is launched or quit. You should customise the scripts to your own needs.
 
 
 ## How to install:
 
-Download the AppWarden zip archive from <https://github.com/execriez/AppWarden>, then unzip the archive on a Mac workstation.
-
-Ideally, to install - you should double-click the following installer package which can be found in the "SupportFiles" directory.
-
-	AppWarden.pkg
-	
-If the installer package isn't available, you can run the command-line installer which can be found in the "util" directory:
-
-	sudo Install
+Download the AppWarden installation package here [AppWarden.pkg](https://raw.githubusercontent.com/execriez/AppWarden/master/SupportFiles/AppWarden.pkg)
 
 The installer will install the following files and directories:
 
 	/Library/LaunchDaemons/com.github.execriez.appwarden.plist
 	/usr/AppWarden/
+	/usr/AppWarden/bin/
+	/usr/AppWarden/bin/AppWarden
+	/usr/AppWarden/bin/AppWarden-WillLaunch
+	/usr/AppWarden/bin/AppWarden-DidLaunch
+	/usr/AppWarden/bin/AppWarden-DidTerminate
 
 There's no need to reboot.
 
-After installation, your computer will speak whenever the primary network status changes.
+After installation, your computer will speak whenever an application launches or quits. 
 
-You can alter the example shell scripts to alter this behavior, these can be found in the following location:
+If the installer fails you should check the installation logs.
 
+## Modifying the example scripts:
+
+After installation, three simple example scripts can be found in the following location:
+
+	/usr/AppWarden/bin/AppWarden-WillLaunch
 	/usr/AppWarden/bin/AppWarden-DidLaunch
 	/usr/AppWarden/bin/AppWarden-DidTerminate
-	/usr/AppWarden/bin/AppWarden-WillLaunch
 
-If the installer fails you should check the logs.
+These simple scripts are called as root, and use the "say" command to speak whenever an application launches or quits. Modify the scripts to alter this default behaviour.
 
-## Logs
+**AppWarden-WillLaunch**
 
-Logs are written to the following file:
+	#!/bin/bash
+	#
+	# Called as root like this:
+	#   AppWarden-WillLaunch "WillLaunch:Epoch:ApplicationBundleIdentifier:ApplicationName:ApplicationPath:ApplicationProcessIdentifier"
+	# i.e.
+	#   AppWarden-WillLaunch "WillLaunch:1538162675:com.apple.TextEdit:TextEdit:/Applications/TextEdit.app:15061"
 
-	/Library/Logs/com.github.execriez.appwarden.log
+	# Get application name e.g. TextEdit
+	sv_ThisAppName="$(echo ${1} | cut -d":" -f4)"
+
+	# Do something
+	say "${sv_ThisAppName} will launch."
+
+**AppWarden-DidLaunch**
+
+	#!/bin/bash
+	#
+	# Called as root like this:
+	#   AppWarden-DidLaunch "DidLaunch:Epoch:ApplicationBundleIdentifier:ApplicationName:ApplicationPath:ApplicationProcessIdentifier"
+
+	# Get application name e.g. TextEdit
+	sv_ThisAppName="$(echo ${1} | cut -d":" -f4)"
+
+	# Do something
+	say "${sv_ThisAppName} did launch."
+
+**AppWarden-DidTerminate**
+
+	#!/bin/bash
+	#
+	# Called as root like this:
+	#   AppWarden-DidTerminate "DidLaunch:Epoch:ApplicationBundleIdentifier:ApplicationName:ApplicationPath:ApplicationProcessIdentifier"
+
+	# Get application name e.g. TextEdit
+	sv_ThisAppName="$(echo ${1} | cut -d":" -f4)"
+
+	# Do something
+	say "${sv_ThisAppName} did quit."
+
 
 ## How to uninstall:
 
-To uninstall you should double-click the following uninstaller package which can be found in the "SupportFiles" directory.
+Download the AppWarden uninstaller package here [AppWarden-Uninstaller.pkg](https://raw.githubusercontent.com/execriez/AppWarden/master/SupportFiles/AppWarden-Uninstaller.pkg)
 
-	AppWarden-Uninstaller.pkg
-	
-If the uninstaller package isn't available, you can uninstall from a shell by typing the following:
-
-	sudo /usr/local/AppWarden/util/Uninstall
-
-The uninstaller will uninstall the following files and directories:
+The uninstaller will remove the following files and directories:
 
 	/Library/LaunchDaemons/com.github.execriez.appwarden.plist
 	/usr/AppWarden/
 
-There's no need to reboot.
-
 After the uninstall everything goes back to normal, and application launches will not be tracked.
 
+There's no need to reboot.
+
+## Logs:
+
+The AppWarden binary writes to the following log file:
+
+	/var/log/systemlog
+  
+The following is an example of a typical system log file entry:
+
+	Sep 28 19:33:43 mymac-01 AppWarden[11918]: Will launch: 'TextEdit'
+	Sep 28 19:33:44 mymac-01 AppWarden[11918]: Did launch: 'TextEdit'
+	Sep 28 19:33:47 mymac-01 AppWarden[11918]: Did terminate: 'TextEdit'
+
+
+The installer writes to the following log file:
+
+	/Library/Logs/com.github.execriez.appwarden.log
+  
+You should check this log if there are issues when installing.
+
 ## History:
+
+1.0.10 - 29 SEP 2018
+
+* Application launch events no longer wait for earlier events to finish before running. Events can now be running simultaneously.
+
+* The example scripts have been simplified, and the readme has been improved.
 
 1.0.9 - 01 JUN 2017
 
@@ -108,3 +164,4 @@ After the uninstall everything goes back to normal, and application launches wil
 1.0.0 - 31 MAR 2009
 
 * Created as the basis for an application auditing system that I never got round to writing.
+* 

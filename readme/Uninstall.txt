@@ -1,18 +1,15 @@
 UNINSTALLING:
 
-To uninstall you should double-click the following uninstaller package which can be found in the "SupportFiles" directory.
+Download the AppWarden uninstaller package here:
 
-  AppWarden-Uninstaller.pkg
-	
-If the uninstaller package isn't available, you can uninstall from a shell by typing the following:
+   https://raw.githubusercontent.com/execriez/AppWarden/master/SupportFiles/AppWarden-Uninstaller.pkg
 
-  sudo /usr/local/AppWarden/util/Uninstall
+The uninstaller will remove the following files and directories:
 
-The uninstaller will uninstall the following files and directories:
+   /Library/LaunchDaemons/com.github.execriez.appwarden.plist
+   /usr/AppWarden/
 
-  /Library/LaunchDaemons/com.github.execriez.appwarden.plist
-  /usr/AppWarden/
+After the uninstall everything goes back to normal, and application launches will not be tracked.
 
 There's no need to reboot.
 
-After the uninstall everything goes back to normal, and application launches will not be tracked.

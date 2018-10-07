@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Called as root like this:
+# Called by AppWarden as user like this:
 #   AppWarden-DidLaunch "DidLaunch:Epoch:ApplicationBundleIdentifier:ApplicationName:ApplicationPath:ApplicationProcessIdentifier"
 
 # Get application name e.g. TextEdit

@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Called as root like this:
+# Called by AppWarden as user like this:
 #   AppWarden-WillLaunch "WillLaunch:Epoch:ApplicationBundleIdentifier:ApplicationName:ApplicationPath:ApplicationProcessIdentifier"
 # i.e.
 #   AppWarden-WillLaunch "WillLaunch:1538162675:com.apple.TextEdit:TextEdit:/Applications/TextEdit.app:15061"

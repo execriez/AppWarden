@@ -89,7 +89,7 @@ then
   GLB_sv_ProjectName="AppWarden"
   GLB_sv_ProjectInitials="AW"
   GLB_sv_ProjectDeveloper="com.github.execriez"
-  GLB_sv_ProjectVersion="1.0.10"
+  GLB_sv_ProjectVersion="1.0.11"
   GLB_sv_ProjectInstall="minimum"
 
   # ---

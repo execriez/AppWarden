@@ -53,7 +53,7 @@ These simple scripts are called as root, and use the "say" command to speak when
 
 	#!/bin/bash
 	#
-	# Called as root like this:
+	# Called by AppWarden as user like this:
 	#   AppWarden-WillLaunch "WillLaunch:Epoch:ApplicationBundleIdentifier:ApplicationName:ApplicationPath:ApplicationProcessIdentifier"
 	# i.e.
 	#   AppWarden-WillLaunch "WillLaunch:1538162675:com.apple.TextEdit:TextEdit:/Applications/TextEdit.app:15061"
@@ -68,7 +68,7 @@ These simple scripts are called as root, and use the "say" command to speak when
 
 	#!/bin/bash
 	#
-	# Called as root like this:
+	# Called by AppWarden as user like this:
 	#   AppWarden-DidLaunch "DidLaunch:Epoch:ApplicationBundleIdentifier:ApplicationName:ApplicationPath:ApplicationProcessIdentifier"
 
 	# Get application name e.g. TextEdit
@@ -81,7 +81,7 @@ These simple scripts are called as root, and use the "say" command to speak when
 
 	#!/bin/bash
 	#
-	# Called as root like this:
+	# Called by AppWarden as user like this:
 	#   AppWarden-DidTerminate "DidLaunch:Epoch:ApplicationBundleIdentifier:ApplicationName:ApplicationPath:ApplicationProcessIdentifier"
 
 	# Get application name e.g. TextEdit
@@ -124,6 +124,10 @@ The installer writes to the following log file:
 You should check this log if there are issues when installing.
 
 ## History:
+
+1.0.11 - 07 OCT 2018
+
+* Changed from a LaunchDaemon to a LaunchAgent, so that it runs as the user that launched the APP, rather than as root.
 
 1.0.10 - 29 SEP 2018
 

@@ -6,7 +6,7 @@ Download the AppWarden installation package here:
 
 The installer will install the following files and directories:
 
-   /Library/LaunchDaemons/com.github.execriez.appwarden.plist
+   /Library/LaunchAgents/com.github.execriez.appwarden.plist
    /usr/AppWarden/
    /usr/AppWarden/bin/
    /usr/AppWarden/bin/AppWarden

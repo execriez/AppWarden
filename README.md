@@ -25,7 +25,7 @@ Download the AppWarden installation package here [AppWarden.pkg](https://raw.git
 
 The installer will install the following files and directories:
 
-	/Library/LaunchDaemons/com.github.execriez.appwarden.plist
+	/Library/LaunchAgents/com.github.execriez.appwarden.plist
 	/usr/AppWarden/
 	/usr/AppWarden/bin/
 	/usr/AppWarden/bin/AppWarden
@@ -97,7 +97,7 @@ Download the AppWarden uninstaller package here [AppWarden-Uninstaller.pkg](http
 
 The uninstaller will remove the following files and directories:
 
-	/Library/LaunchDaemons/com.github.execriez.appwarden.plist
+	/Library/LaunchAgents/com.github.execriez.appwarden.plist
 	/usr/AppWarden/
 
 After the uninstall everything goes back to normal, and application launches will not be tracked.

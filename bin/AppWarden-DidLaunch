@@ -7,4 +7,4 @@
 sv_ThisAppName="$(echo ${1} | cut -d":" -f4)"
 
 # Do something
-say "${sv_ThisAppName} did launch."
+echo "$(date '+%d %b %Y %H:%M:%S %Z') DidLaunch - '${sv_ThisAppName}' did launch" >> ~/Library/Logs/AppWarden.log

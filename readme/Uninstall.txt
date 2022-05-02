@@ -1,8 +1,11 @@
 UNINSTALLING:
 
-Download the AppWarden uninstaller package here:
 
-   https://raw.githubusercontent.com/execriez/AppWarden/master/SupportFiles/AppWarden-Uninstaller.pkg
+Open the Terminal app, and download the latest AppWarden-Uninstaller.pkg uninstaller to your desktop by typing the following command. 
+
+	curl -k --silent --retry 3 --retry-max-time 6 --fail https://raw.githubusercontent.com/execriez/AppWarden/master/SupportFiles/AppWarden-Uninstaller.pkg --output ~/Desktop/ConsoleUserWarden-Uninstaller.pkg
+
+To uninstall, double-click the downloaded package.
 
 The uninstaller will remove the following files and directories:
 

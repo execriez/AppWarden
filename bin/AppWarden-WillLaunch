@@ -9,4 +9,4 @@
 sv_ThisAppName="$(echo ${1} | cut -d":" -f4)"
 
 # Do something
-say "${sv_ThisAppName} will launch."
+echo "$(date '+%d %b %Y %H:%M:%S %Z') WillLaunch - '${sv_ThisAppName}' will launch" >> ~/Library/Logs/AppWarden.log

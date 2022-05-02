@@ -16,12 +16,16 @@ AppWarden consists of the following components:
  
 AppWarden-WillLaunch, AppWarden-DidLaunch and AppWarden-DidTerminate are bash scripts.
 
-These example scripts use the "say" command to speak whenever an App is launched or quit. You should customise the scripts to your own needs.
+The example scripts simply write to a log file in ~/Library/Logs. You should customise the scripts to your own needs.
 
 
 ## How to install:
 
-Download the AppWarden installation package here [AppWarden.pkg](https://raw.githubusercontent.com/execriez/AppWarden/master/SupportFiles/AppWarden.pkg)
+Open the Terminal app, and download the latest [AppWarden.pkg](https://raw.githubusercontent.com/execriez/AppWarden/master/SupportFiles/AppWarden.pkg) installer to your desktop by typing the following command. 
+
+	curl -k --silent --retry 3 --retry-max-time 6 --fail https://raw.githubusercontent.com/execriez/AppWarden/master/SupportFiles/AppWarden.pkg
+
+To install, double-click the downloaded package.
 
 The installer will install the following files and directories:
 
@@ -35,7 +39,7 @@ The installer will install the following files and directories:
 
 There's no need to reboot.
 
-After installation, your computer will speak whenever an application launches or quits. 
+After installation, your computer will write to the log file ~/Library/Logs/AppWarden.log whenever an application launches or quits. 
 
 If the installer fails you should check the installation logs.
 
@@ -47,7 +51,7 @@ After installation, three simple example scripts can be found in the following l
 	/usr/AppWarden/bin/AppWarden-DidLaunch
 	/usr/AppWarden/bin/AppWarden-DidTerminate
 
-These simple scripts are called as root, and use the "say" command to speak whenever an application launches or quits. Modify the scripts to alter this default behaviour.
+These scripts simply write to the log file ~/Library/Logs/AppWarden.log whenever the ConsoleUser changes. Modify the scripts to your own needs.
 
 **AppWarden-WillLaunch**
 
@@ -57,12 +61,12 @@ These simple scripts are called as root, and use the "say" command to speak when
 	#   AppWarden-WillLaunch "WillLaunch:Epoch:ApplicationBundleIdentifier:ApplicationName:ApplicationPath:ApplicationProcessIdentifier"
 	# i.e.
 	#   AppWarden-WillLaunch "WillLaunch:1538162675:com.apple.TextEdit:TextEdit:/Applications/TextEdit.app:15061"
-
+	
 	# Get application name e.g. TextEdit
 	sv_ThisAppName="$(echo ${1} | cut -d":" -f4)"
-
+	
 	# Do something
-	say "${sv_ThisAppName} will launch."
+	echo "$(date '+%d %b %Y %H:%M:%S %Z') WillLaunch - '${sv_ThisAppName}' will launch" >> ~/Library/Logs/AppWarden.log
 
 **AppWarden-DidLaunch**
 
@@ -70,12 +74,12 @@ These simple scripts are called as root, and use the "say" command to speak when
 	#
 	# Called by AppWarden as user like this:
 	#   AppWarden-DidLaunch "DidLaunch:Epoch:ApplicationBundleIdentifier:ApplicationName:ApplicationPath:ApplicationProcessIdentifier"
-
+	
 	# Get application name e.g. TextEdit
 	sv_ThisAppName="$(echo ${1} | cut -d":" -f4)"
-
+	
 	# Do something
-	say "${sv_ThisAppName} did launch."
+	echo "$(date '+%d %b %Y %H:%M:%S %Z') DidLaunch - '${sv_ThisAppName}' did launch" >> ~/Library/Logs/AppWarden.log
 
 **AppWarden-DidTerminate**
 
@@ -83,17 +87,21 @@ These simple scripts are called as root, and use the "say" command to speak when
 	#
 	# Called by AppWarden as user like this:
 	#   AppWarden-DidTerminate "DidLaunch:Epoch:ApplicationBundleIdentifier:ApplicationName:ApplicationPath:ApplicationProcessIdentifier"
-
+	
 	# Get application name e.g. TextEdit
 	sv_ThisAppName="$(echo ${1} | cut -d":" -f4)"
-
+	
 	# Do something
-	say "${sv_ThisAppName} did quit."
+	echo "$(date '+%d %b %Y %H:%M:%S %Z') DidTerminate - '${sv_ThisAppName}' did quit" >> ~/Library/Logs/AppWarden.log
 
 
 ## How to uninstall:
 
-Download the AppWarden uninstaller package here [AppWarden-Uninstaller.pkg](https://raw.githubusercontent.com/execriez/AppWarden/master/SupportFiles/AppWarden-Uninstaller.pkg)
+Open the Terminal app, and download the latest [AppWarden-Uninstaller.pkg](https://raw.githubusercontent.com/execriez/AppWarden/master/SupportFiles/AppWarden-Uninstaller.pkg) uninstaller to your desktop by typing the following command. 
+
+	curl -k --silent --retry 3 --retry-max-time 6 --fail https://raw.githubusercontent.com/execriez/AppWarden/master/SupportFiles/AppWarden-Uninstaller.pkg --output ~/Desktop/ConsoleUserWarden-Uninstaller.pkg
+
+To uninstall, double-click the downloaded package.
 
 The uninstaller will remove the following files and directories:
 
@@ -106,16 +114,9 @@ There's no need to reboot.
 
 ## Logs:
 
-The AppWarden binary writes to the following log file:
+The example scripts write to the following log file:
 
-	/var/log/systemlog
-  
-The following is an example of a typical system log file entry:
-
-	Sep 28 19:33:43 mymac-01 AppWarden[11918]: Will launch: 'TextEdit'
-	Sep 28 19:33:44 mymac-01 AppWarden[11918]: Did launch: 'TextEdit'
-	Sep 28 19:33:47 mymac-01 AppWarden[11918]: Did terminate: 'TextEdit'
-
+	~/Library/Logs/AppWarden.log
 
 The installer writes to the following log file:
 
@@ -124,6 +125,14 @@ The installer writes to the following log file:
 You should check this log if there are issues when installing.
 
 ## History:
+
+1.0.12 - 02 MAY 2022
+
+* Compiled as a fat binary to support both Apple Silicon and Intel Chipsets. This version requires MacOS 10.9 or later.
+
+* The example scripts now just write to a log file. Previously they made use of the "say" command.
+
+* The package creation and installation code has been aligned with other "Warden" projects.
 
 1.0.11 - 07 OCT 2018
 

@@ -7,4 +7,4 @@
 sv_ThisAppName="$(echo ${1} | cut -d":" -f4)"
 
 # Do something
-say "${sv_ThisAppName} did quit."
+echo "$(date '+%d %b %Y %H:%M:%S %Z') DidTerminate - '${sv_ThisAppName}' did quit" >> ~/Library/Logs/AppWarden.log

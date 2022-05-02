@@ -1,8 +1,11 @@
 INSTALLATION:
 
-Download the AppWarden installation package here:
+Open the Terminal app, and download the latest AppWarden.pkg installer to your desktop by typing the following command. 
 
-   https://raw.githubusercontent.com/execriez/AppWarden/master/SupportFiles/AppWarden.pkg
+	curl -k --silent --retry 3 --retry-max-time 6 --fail https://raw.githubusercontent.com/execriez/AppWarden/master/SupportFiles/AppWarden.pkg
+
+To install, double-click the downloaded package.
+
 
 The installer will install the following files and directories:
 
@@ -16,7 +19,7 @@ The installer will install the following files and directories:
 
 There's no need to reboot.
 
-After installation, your computer will speak whenever an application launches or quits.
+After installation, your computer will write to the log file ~/Library/Logs/AppWarden.log whenever an application launches or quits. 
 
 If the installer fails you should check the installation logs.
 
@@ -29,17 +32,17 @@ After installation, three simple example scripts can be found in the following l
    /usr/AppWarden/bin/AppWarden-DidLaunch
    /usr/AppWarden/bin/AppWarden-DidTerminate
 
-These simple scripts use the "say" command to speak whenever an application launches or quits. Modify the scripts to alter this default behaviour.
+These scripts simply write to the log file ~/Library/Logs/AppWarden.log whenever the ConsoleUser changes. Modify the scripts to your own needs.
 
 
 LOGS:
 
-The AppWarden binary writes to the following log file:
+The example scripts write to the following log file:
 
-   /var/log/systemlog
+	~/Library/Logs/AppWarden.log
 
 The installer writes to the following log file:
 
-   /Library/Logs/com.github.execriez.appwarden.log
-
+	/Library/Logs/com.github.execriez.appwarden.log
+  
 You should check this log if there are issues when installing.
